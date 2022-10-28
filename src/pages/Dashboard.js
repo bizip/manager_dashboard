@@ -1,10 +1,13 @@
 import React from 'react';
-import NavBar from '../components/navbars/NavBar';
+import Sidebar from '../components/sidebars/Sidebar';
 
 const Dashboard = () => (
-  <div>
-    <NavBar />
-  </div>
+  <section className="dashboard">
+    <div className="left__sidebar">
+      <Sidebar />
+    </div>
+    <div className="right__dashboard">Dashboard</div>
+  </section>
 );
 
 export default Dashboard;
