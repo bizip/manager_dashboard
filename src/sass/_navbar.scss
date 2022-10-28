@@ -3,6 +3,7 @@
 .nav_container {
   @include spaceBetween;
 
+  z-index: 100;
   font-size: 1.5rem;
   padding: 0 2rem;
   box-shadow: var(--boxshadow-nav);
