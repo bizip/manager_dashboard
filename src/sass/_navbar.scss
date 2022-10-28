@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+.nav_container {
+  @include spaceBetween;
+
+  font-size: 1.5rem;
+  padding: 0 2rem;
+  box-shadow: var(--boxshadow-nav);
+}
+
+.nav__left {
+  font-family: 'Pacifico', cursive;
+
+  @include spaceBetween;
+
+  align-items: center;
+  min-width: 20%;
+  color: var(--color-grey-dark-1);
+}
+
+.nav__hamberger {
+  font-size: 3.5rem;
+  color: #3b82f6;
+}
+
+.nav__right {
+  @include spaceBetween;
+}
+
+.nav__avatar {
+  display: flex;
+  align-items: center;
+  color: var(--color-grey-dark-1);
+}
+
+.avatar__profile {
+  width: 4rem;
+  height: 4rem;
+  padding: 0.3rem 0;
+  border-radius: 50%;
+}
+
+.avatar__details {
+  margin: 1rem 5rem 0.5rem 0.5rem;
+}
+
+.details_header {
+  color: var(--color-grey-dark-1);
+  font-weight: bold;
+}

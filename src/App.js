@@ -1,9 +1,10 @@
-import './App.css';
+import './sass/App.scss';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
     <div className="App">
-      <h1>Math magicians</h1>
+      <Dashboard />
     </div>
   );
 }
