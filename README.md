@@ -1,8 +1,6 @@
-![](https://img.shields.io/badge/Microverse-blueviolet)
+# Manager Dashboard
 
-# Math magicians
-
-> "Math magicians" is a website for all fans of mathematics. It is a Single Page App (SPA) that allows users to: Make simple calculations. Read a random math-related
+>It is a VIP manager dashboard that will display all statistical data related to VIP manager. I have used ReactJS along with chartJS
 
 ## Built With
 
@@ -15,11 +13,11 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 You need to have a git installed
-You need to have a basic knowledge about HTML and CSS
+You need to have a basic knowledge about React
 
 ### Setup
 
-#### clone this project (using git clone https://github.com/bizip/math_magicians.git) to your local computer and use telminal to navigate into the parent directory of this project.
+#### clone this project (using git clone https://github.com/bizip/manager_dashboard.git) to your local computer and use terminal to navigate into the parent directory of this project.
 
 ### Install
 
@@ -28,6 +26,8 @@ You need to have a basic knowledge about HTML and CSS
 ### Usage
 
 run: npm start
+
+test: npm test
 
 ## Authors
 
@@ -49,7 +49,7 @@ Give a ⭐️ if you like this project!
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
+- Hat tip to anyone who reviewed this repository
 - Inspiration
 - etc
 
