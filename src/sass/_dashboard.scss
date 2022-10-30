@@ -21,6 +21,7 @@
 .board__icons {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   padding: 2rem;
 }
 
@@ -92,12 +93,9 @@
   align-items: flex-end;
 }
 
-// chart from chart js
-
 .chart__container {
   display: grid;
   grid-template-columns: 1fr 40%;
-  height: 15rem;
   padding: 3rem 0;
 }
 
@@ -123,8 +121,6 @@
 }
 
 .track {
-  height: 25rem;
-
   @include spaceBetween;
 
   align-items: flex-end;
@@ -133,7 +129,7 @@
 .target__header {
   @include spaceBetween;
 
-  height: 4rem;
+  padding: 2rem 0;
   align-items: center;
 }
 
