@@ -19,7 +19,7 @@ const Board = () => (
           <TbBuildingSkyscraper />
           <h1>Minimal Dashboard</h1>
         </span>
-        <span className="top_header">
+        <span className="top_header .top_paragraph">
           <ImHome />
           {' '}
           <p> / Dashboards / Minimal Dashboard example</p>
