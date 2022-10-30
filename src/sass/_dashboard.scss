@@ -1,56 +1,171 @@
-.sidebar {
-  height: 90vh;
-  padding: 2rem 3rem;
-}
-
-.dashboard {
-  display: grid;
-  grid-template-columns: 1fr 80%;
-}
-
-.side_header {
-  color: #3b82f6;
+.mid_dashboard {
   font-size: 1.5rem;
-  margin: 2rem 0;
+  padding: 2%;
 }
 
-.link_container {
-  font-size: 1.5rem;
-
+.board {
   @include spaceBetween;
 
-  margin: 1.5rem 2rem;
-
-  &:hover {
-    background-color: var(--color-grey-light-2);
-    border-radius: 10%;
-    font-size: 1.6rem;
-  }
+  align-items: center;
 }
 
-.link_left {
-  min-width: 70%;
+.p-message-detail {
+  font-size: 1.5rem;
+}
+
+.top_header {
   display: flex;
   align-items: center;
 }
 
-.link__icon {
-  color: var(--color-grey-dark-2);
-  font-size: 2rem;
+.board__icons {
+  display: flex;
+  align-items: center;
+  padding: 2rem;
 }
 
-.link__didebar {
-  text-decoration: none;
+.board__icon {
+  color: #fff;
+}
+
+#country {
+  padding: 0.5rem;
+}
+
+.icon_container {
+  background-color: var(--color-grey-dark-1);
+  font-size: 2rem;
+  min-width: 4rem;
+  border-radius: 4%;
+  display: flex;
+  justify-content: center;
+  height: 3rem;
+  align-items: center;
   margin-left: 1rem;
-  color: var(--color-grey-dark-1);
+}
+
+.card_one {
+  background-color: #fff;
+
+  @include spaceBetween;
+
+  width: 23%;
+  max-width: 30%;
+  padding: 1rem;
+}
+
+.left__icon {
+  color: green;
+  font-size: 3rem;
   font-weight: bold;
 }
 
-.right__dashboard {
-  background-color: var(--color-grey-light-2);
-  margin-top: 8px;
+.numbers {
+  display: flex;
+  align-items: center;
 }
 
-.active {
+.value {
+  font-weight: 700;
+  font-size: 3rem;
+  padding: 0.2rem 0.5rem;
+}
+
+.target__value {
+  font-weight: 700;
+  font-size: 2rem;
+  margin-right: 0.5rem;
+}
+
+.right__icon {
+  font-size: 2rem;
+}
+
+.card__list {
+  @include spaceBetween;
+}
+
+.circular {
+  max-width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+// chart from chart js
+
+.chart__container {
+  display: grid;
+  grid-template-columns: 1fr 40%;
+  height: 15rem;
+  padding: 3rem 0;
+}
+
+.chart__card {
+  height: 15rem !important;
+}
+
+.p-chart canvas {
+  @include fixCart;
+}
+
+.CircularProgressbar {
+  max-height: 20rem;
+  max-width: 20rem !important;
+}
+
+.income {
+  background-color: #fff;
+  height: 25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.track {
+  height: 25rem;
+
+  @include spaceBetween;
+
+  align-items: flex-end;
+}
+
+.target__header {
+  @include spaceBetween;
+
+  height: 4rem;
+  align-items: center;
+}
+
+.target__card__header {
+  display: flex;
+  align-items: center;
+}
+
+.target__card {
+  background-color: #fff;
+  width: 23%;
+  font-size: 1.5rem;
+  max-width: 30%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.p-progressbar-determinate {
+  width: 14rem !important;
+  height: 10px !important;
+}
+
+.target__list {
+  @include spaceBetween;
+}
+
+.p-progressbar .p-progressbar-value {
+  background-color: #3b82f6 !important;
+}
+
+.target__Link {
   color: #3b82f6;
+  text-decoration: none;
 }
