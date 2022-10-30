@@ -1,4 +1,5 @@
 import React from 'react';
+import Board from '../components/boards/Board';
 import Sidebar from '../components/sidebars/Sidebar';
 
 const Dashboard = () => (
@@ -6,7 +7,9 @@ const Dashboard = () => (
     <div className="left__sidebar">
       <Sidebar />
     </div>
-    <div className="right__dashboard">Dashboard</div>
+    <div className="right__dashboard">
+      <Board />
+    </div>
   </section>
 );
 

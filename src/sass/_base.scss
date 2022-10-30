@@ -36,3 +36,9 @@ body {
   display: flex;
   justify-content: space-between;
 }
+
+@mixin fixCart {
+  background-color: #fff;
+  height: 25rem !important;
+  width: 60rem !important;
+}
