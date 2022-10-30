@@ -1,19 +1,17 @@
-@media only screen and (max-width: 1298px) {
-  .p-chart canvas {
-    // height: 25rem !important;
-    // width: 52rem !important;
-  }
-}
 
 @media only screen and (max-width: 1115px) {
-  // .p-chart canvas  {
-  //     height: 25rem !important;
-  //     width: 50rem !important;
-  // }
-
   .CircularProgressbar {
-    max-height: 100%;
+    max-height: 100% !important;
     max-width: 100% !important;
+  }
+
+  #CircularProgressbarWithChildren__children {
+    background-color: silver;
+  }
+
+  #CircularProgressbarWithChildren__children div {
+    max-height: 70% !important;
+    max-width: 70% !important;
   }
 
   .card__list,
@@ -29,15 +27,15 @@
     max-height: 10rem;
   }
 
-  .target__header {
-    margin-bottom: 10rem;
-  }
-
   .chart__container {
     grid-template-columns: 1fr;
     justify-content: space-between;
     position: relative;
     padding: 1rem 0;
+  }
+
+  .p-chart canvas {
+    width: 100%;
   }
 
   .trafic {
@@ -47,15 +45,6 @@
   .target__card {
     margin: 2rem 0;
   }
-}
-
-@media only screen and (max-width: 750px) {
-  // .card_one,
-  // .target__card{
-  //     margin-bottom: 2rem;
-  //     min-width: 25rem !important;
-
-  // }
 }
 
 @media only screen and (max-width: 660px) {
@@ -78,18 +67,5 @@
 
   .top_paragraph {
     display: none;
-  }
-
-  // .card_one,
-  // .target__card{
-  //     margin-bottom: 2rem;
-  //     min-width: 28rem !important;
-
-  // }
-}
-
-@media only screen and (max-width: 660px) {
-  .income {
-    max-width: 90% !important;
   }
 }

@@ -8,6 +8,12 @@
 
 ## Getting Started
 
+### link to live version
+
+[Dashboard](https://sensational-granita-cbf09c.netlify.app)
+
+### Use it locally
+
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
