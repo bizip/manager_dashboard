@@ -6,7 +6,7 @@
   --color-grey-dark-1: #333;
   --color-grey-dark-2: #777;
   --color-grey-dark-3: #999;
-  --boxshadow-nav: rgba(0, 0, 0, 0.16) 0 3px 6px, rgba(0, 0, 0, 0.23) 0 3px 6px;
+  --boxshadow-nav: rgba(33, 35, 38, 0.1) 0 10px 10px -10px;
 }
 
 * {
@@ -21,6 +21,7 @@
 }
 
 html {
+  width: 100%;
   box-sizing: border-box;
   font-size: 62.5%;
 }

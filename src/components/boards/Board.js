@@ -17,12 +17,21 @@ const Board = () => (
       <div className="board__header">
         <span className="top_header">
           <TbBuildingSkyscraper />
-          <h1>Minimal Dashboard</h1>
+          <h1 className="top__title">Minimal Dashboard</h1>
         </span>
         <span className="top_header .top_paragraph">
           <ImHome />
           {' '}
-          <p> / Dashboards / Minimal Dashboard example</p>
+          <p className="top__title">
+            {' '}
+            <b>/</b>
+            {' '}
+            Dashboards
+            {' '}
+            <b>/</b>
+            {' '}
+            Minimal Dashboard example
+          </p>
         </span>
       </div>
 
