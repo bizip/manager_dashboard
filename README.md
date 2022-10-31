@@ -5,11 +5,17 @@
 ## Built With
 
 -React Js
+
 -React circular progress bar
+
 -Prime face React
+
 -React testing libraly
+
 -Sass
+
 -Eslint and styleLint
+
 
 ## Getting Started
 
