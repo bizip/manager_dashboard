@@ -44,7 +44,7 @@ exports[`Test for rendering dashboard page It should render dashboard page 1`] =
               />
             </svg>
             <a
-              className="link__didebar"
+              className="link__sidebar"
               href="#/all"
               onClick={[Function]}
             >
@@ -104,7 +104,7 @@ exports[`Test for rendering dashboard page It should render dashboard page 1`] =
               </svg>
               <a
                 activeClassName="active"
-                className="link__didebar"
+                className="link__sidebar"
                 href="#/example2"
                 onClick={[Function]}
               >
@@ -159,7 +159,7 @@ exports[`Test for rendering dashboard page It should render dashboard page 1`] =
             </svg>
             <a
               activeClassName="active"
-              className="link__didebar"
+              className="link__sidebar"
               href="#/example3"
               onClick={[Function]}
             >
@@ -222,7 +222,7 @@ exports[`Test for rendering dashboard page It should render dashboard page 1`] =
             </svg>
             <a
               activeClassName="active"
-              className="link__didebar"
+              className="link__sidebar"
               href="#/example4"
               onClick={[Function]}
             >
@@ -260,7 +260,7 @@ exports[`Test for rendering dashboard page It should render dashboard page 1`] =
             </svg>
             <a
               activeClassName="active"
-              className="link__didebar"
+              className="link__sidebar"
               href="#/example5"
               onClick={[Function]}
             >
@@ -314,7 +314,7 @@ exports[`Test for rendering dashboard page It should render dashboard page 1`] =
             </svg>
             <a
               activeClassName="active"
-              className="link__didebar"
+              className="link__sidebar"
               href="#/example6"
               onClick={[Function]}
             >
@@ -353,7 +353,7 @@ exports[`Test for rendering dashboard page It should render dashboard page 1`] =
             </svg>
             <a
               activeClassName="active"
-              className="link__didebar"
+              className="link__sidebar"
               href="#/exmple7"
               onClick={[Function]}
             >
@@ -392,7 +392,7 @@ exports[`Test for rendering dashboard page It should render dashboard page 1`] =
             </svg>
             <a
               activeClassName="active"
-              className="link__didebar"
+              className="link__sidebar"
               href="#/example8"
               onClick={[Function]}
             >
@@ -477,7 +477,9 @@ exports[`Test for rendering dashboard page It should render dashboard page 1`] =
                 y2="18.01"
               />
             </svg>
-            <h1>
+            <h1
+              className="top__title"
+            >
               Minimal Dashboard
             </h1>
           </span>
@@ -504,8 +506,21 @@ exports[`Test for rendering dashboard page It should render dashboard page 1`] =
               />
             </svg>
              
-            <p>
-               / Dashboards / Minimal Dashboard example
+            <p
+              className="top__title"
+            >
+               
+              <b>
+                /
+              </b>
+               
+              Dashboards
+               
+              <b>
+                /
+              </b>
+               
+              Minimal Dashboard example
             </p>
           </span>
         </div>
