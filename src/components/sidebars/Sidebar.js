@@ -22,7 +22,7 @@ const Sidebar = () => {
         <li className="link_container">
           <div className="link_left">
             <SlDiamond className="link__icon" />
-            <NavLink to="all" className="link__sidebar" onClick={toggleElement}>Elements</NavLink>
+            <NavLink to="." className="link__sidebar" onClick={toggleElement}>Elements</NavLink>
           </div>
           <IoIosArrowDown className="link__icon" />
         </li>
