@@ -58,6 +58,7 @@ const NavBar = () => {
     // On the above line we can add loader
     if (!user) return navigate('/');
     fetchUserName();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading]);
 
   return (
