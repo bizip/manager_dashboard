@@ -14,6 +14,50 @@ function Register() {
   const [name, setName] = useState('');
   const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
+
+  const imageMimeType = /image\/(png|jpg|jpeg)/i;
+
+  const [file, setFile] = useState(null);
+  const [fileDataURL, setFileDataURL] = useState('https://deejayfarm.com/wp-content/uploads/2019/10/Profile-pic.jpg');
+
+  const changeHandler = (e) => {
+    const file = e.target.files[0];
+    if (!file.type.match(imageMimeType)) {
+      toast.error('Image mime type is not valid', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+      return;
+    }
+    setFile(file);
+  };
+  useEffect(() => {
+    let fileReader; let
+      isCancel = false;
+    if (file) {
+      fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        const { result } = e.target;
+        if (result && !isCancel) {
+          setFileDataURL(result);
+        }
+      };
+      fileReader.readAsDataURL(file);
+    }
+    return () => {
+      isCancel = true;
+      if (fileReader && fileReader.readyState === 1) {
+        fileReader.abort();
+      }
+    };
+  }, [file]);
+
   const register = () => {
     if (!name) {
       toast.error('Please enter the name', {
@@ -51,6 +95,26 @@ function Register() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="E-mail Address"
         />
+        <p>
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label htmlFor="image"> Browse images</label>
+          <input
+            type="file"
+            id="image"
+            accept=".png, .jpg, .jpeg"
+            onChange={changeHandler}
+          />
+        </p>
+
+        {fileDataURL
+          ? (
+            <p className="img-preview-wrapper">
+              <img src={fileDataURL} className="img_preview" alt="preview" />
+            </p>
+          ) : null}
+        <p>
+          <button type="button">Save</button>
+        </p>
         <input
           type="password"
           className="register__textBox"
