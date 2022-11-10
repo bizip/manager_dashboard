@@ -80,7 +80,7 @@ const NavBar = () => {
           </Link>
 
           <div className="avatar__details">
-            <p className="details_header">{name}</p>
+            <p className="details_header">{userName}</p>
             <p className="details_header--sub">{ user?.email }</p>
           </div>
 
