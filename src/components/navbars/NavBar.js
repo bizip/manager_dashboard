@@ -32,6 +32,9 @@ const NavBar = () => {
       const doc = await getDocs(q);
       const data = doc.docs[0].data();
       setName(data.name);
+      if (data.profileURL) {
+        setProfile(data.profileURL || profile);
+      }
     } catch (err) {
       toast.error('An error occured while fetching user data', {
         position: 'top-right',

@@ -16,20 +16,24 @@ import {
   where,
   addDoc,
 } from 'firebase/firestore';
+import {
+  getStorage,
+} from 'firebase/storage';
 import { toast } from 'react-toastify';
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyC70h_erbd6VRJjM3GmCQnNFVWZBec0x3Q',
-  authDomain: 'fir-auth-article-a24d5.firebaseapp.com',
-  projectId: 'fir-auth-article-a24d5',
-  storageBucket: 'fir-auth-article-a24d5.appspot.com',
-  messagingSenderId: '512616452919',
-  appId: '1:512616452919:web:60617b671ffcc8615f00b2',
-  measurementId: 'G-ZMJD6216RR',
+  apiKey: 'AIzaSyCQo9EQ2y6B3JMOKmFE9xHRsKnqAPA2qvg',
+  authDomain: 'dashboard-f3cd2.firebaseapp.com',
+  projectId: 'dashboard-f3cd2',
+  storageBucket: 'dashboard-f3cd2.appspot.com',
+  messagingSenderId: '730680345447',
+  appId: '1:730680345447:web:5551883b5a31ee8291a5c2',
+  measurementId: 'G-W498EPQH0G',
 };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 const googleProvider = new GoogleAuthProvider();
 const signInWithGoogle = async () => {
   try {
@@ -74,7 +78,7 @@ const logInWithEmailAndPassword = async (email, password) => {
     });
   }
 };
-const registerWithEmailAndPassword = async (name, email, password) => {
+const registerWithEmailAndPassword = async (name, email, password, downloadURL) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const { user } = res;
@@ -83,6 +87,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       name,
       authProvider: 'local',
       email,
+      profileURL: downloadURL,
     });
   } catch (err) {
     toast.error(err, {
@@ -137,4 +142,5 @@ export {
   sendPasswordResetEmail,
   sendPasswordReset,
   logout,
+  storage,
 };
