@@ -2,29 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import {
-  getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable,
-} from 'firebase/storage';
-import { v4 as uuidv4 } from 'uuid';
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import {
   auth,
   storage,
   registerWithEmailAndPassword,
   signInWithGoogle,
-  upload,
-  useAuth,
 } from './firebase';
 
 function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [useName, setuserName] = useState('');
-
   const [user, loading] = useAuthState(auth);
-  const [per, setPerc] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const currentUser = useAuth();
 
   const imageMimeType = /image\/(png|jpg|PNG|jpeg)/i;
 
@@ -71,59 +63,49 @@ function Register() {
 
   const register = async () => {
     const uploadFile = () => {
-      const name = new Date().getTime() + file.name;
-
-      console.log(name);
-      const storageRef = ref(storage, file.name);
+      const fileName = new Date().getTime() + file.name;
+      const storageRef = ref(storage, fileName);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on(
         'state_changed',
         (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
-          setPerc(progress);
+          // const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setIsLoading(true);
           switch (snapshot.state) {
             case 'paused':
-              console.log('Upload is paused');
+              setIsLoading(true);
               break;
             case 'running':
-              console.log('Upload is running');
+              setIsLoading(true);
               break;
             default:
               break;
           }
         },
         (error) => {
-          console.log(error);
+          setIsLoading(false);
+          toast.error(error, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            registerWithEmailAndPassword(userName, email, password, downloadURL);
+            registerWithEmailAndPassword(name, email, password, downloadURL);
+            setIsLoading(false);
           });
         },
       );
     };
-
+    // eslint-disable-next-line no-unused-expressions
     file && uploadFile();
-
-    // console.log("you are trying to registaer pascal")
-    // if (!name || !email || !password) {
-    //   toast.error('All field are reqired', {
-    //     position: 'top-right',
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: 'light',
-    //   });
-    // }
-
-    // if(file){
-    // const res =await registerWithEmailAndPassword(name, email, password,file);
-    // }
   };
   useEffect(() => {
     if (loading) return;
@@ -137,8 +119,8 @@ function Register() {
         <input
           type="text"
           className="register__textBox"
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           placeholder="Full Name"
         />
         <input
@@ -165,9 +147,6 @@ function Register() {
               <img src={fileDataURL} className="img_preview" alt="preview" />
             </p>
           ) : null}
-        <p>
-          <button type="button">Save</button>
-        </p>
         <input
           type="password"
           className="register__textBox"
@@ -176,7 +155,7 @@ function Register() {
           placeholder="Password"
         />
         <button type="button" className="register__btn" onClick={register}>
-          Register
+          {isLoading ? 'Registering ...' : 'Register'}
         </button>
         <button
           type="button"

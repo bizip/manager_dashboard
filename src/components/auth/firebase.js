@@ -7,7 +7,6 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
-  onAuthStateChanged,
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -18,9 +17,8 @@ import {
   addDoc,
 } from 'firebase/firestore';
 import {
-  getDownloadURL, getStorage, ref, uploadBytes,
+  getStorage,
 } from 'firebase/storage';
-import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -84,11 +82,9 @@ const registerWithEmailAndPassword = async (name, email, password, downloadURL) 
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const { user } = res;
-    console.log(user);
-
     await addDoc(collection(db, 'users'), {
       uid: user.uid,
-      userName,
+      name,
       authProvider: 'local',
       email,
       profileURL: downloadURL,
@@ -135,33 +131,6 @@ const sendPasswordReset = async (email) => {
 const logout = () => {
   signOut(auth);
 };
-
-// Custom Hook
-export function useAuth() {
-  const [currentUser, setCurrentUser] = useState();
-
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => setCurrentUser(user));
-    return unsub;
-  }, []);
-
-  return currentUser;
-}
-
-// Storage
-export async function upload(file, currentUser, setLoading) {
-  const fileRef = ref(storage, `${currentUser.uid}.png`);
-
-  setLoading(true);
-
-  const snapshot = await uploadBytes(fileRef, file);
-  const photoURL = await getDownloadURL(fileRef);
-
-  updateProfile(currentUser, { photoURL });
-
-  setLoading(false);
-  alert('Uploaded file!');
-}
 
 export {
   auth,
