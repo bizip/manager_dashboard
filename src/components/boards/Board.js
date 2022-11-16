@@ -4,6 +4,7 @@ import { TbBuildingSkyscraper } from 'react-icons/tb';
 // import { collection, getDocs } from 'firebase/filestore';
 import { ImHome } from 'react-icons/im';
 import { FaBatteryThreeQuarters } from 'react-icons/fa';
+import { collection, getDocs } from 'firebase/firestore';
 import Alert from '../shared/Alert';
 import Card from '../shared/Card';
 import BarChart from '../shared/BarChart';
@@ -12,10 +13,9 @@ import { cardList, targetList, trachTrack } from '../shared/Data';
 import TrackBoard from '../shared/TrackBoard';
 import TargetBord from '../shared/TargetBord';
 import { db } from '../auth/firebase';
-import { collection, getDocs } from 'firebase/firestore';
 
 const Board = () => {
-  const [info , setInfo] = useState([]);
+  const [info, setInfo] = useState([]);
   // const summaryRef = collection(db, "summary")
   // const [summary,setSummary] = useState([]);
   // useEffect(() => {
@@ -26,19 +26,17 @@ const Board = () => {
 
   //   getSummary();
   // }, []);
-  
 
+  useEffect(() => {
+    const colRef = collection(db, 'summary');
+    getDocs(colRef).then((snapshots) => {
+      snapshots.docs.map((item) => {
+        console.log(item.data());
+      });
+    });
+  }, []);
 
-useEffect(()=>{
-  const colRef =collection(db, "summary");
-  getDocs(colRef).then((snapshots)=>{
-    snapshots.docs.map((item)=>{
-  console.log(item.data())
-    })
-  });
-},[]);
-
-console.log(info)
+  console.log(info);
   return (
     <section className="mid_dashboard">
       <div className="board">
