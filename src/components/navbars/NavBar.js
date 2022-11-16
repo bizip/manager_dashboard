@@ -4,9 +4,10 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  query, collection, getDocs, where,
+  query, collection, where, getDocs,
 } from 'firebase/firestore';
 // import { onAuthStateChanged } from 'firebase/auth';
+// import { collection, doc, setDoc } from "firebase/firestore";
 
 import { toast } from 'react-toastify';
 import { auth, db } from '../auth/firebase';
@@ -33,7 +34,7 @@ const NavBar = () => {
       const data = doc.docs[0].data();
       setName(data.name);
       if (data.profileURL) {
-        setProfile(data.profileURL || profile);
+        setProfile(data.profileURL);
       }
     } catch (err) {
       toast.error('An error occured while fetching user data', {
@@ -61,6 +62,13 @@ const NavBar = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading]);
+
+  // if (docSnap.exists()) {
+  //   console.log("Document data:", docSnap.data());
+  // } else {
+  //   // doc.data() will be undefined in this case
+  //   console.log("No such document!");
+  // }
 
   return (
     <div>
