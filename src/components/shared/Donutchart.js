@@ -4,7 +4,7 @@ import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 const Donutchart = () => (
   <div>
     <CircularProgressbarWithChildren value={66}>
-      <div style={{ fontSize: 12, marginTop: -5 }} className="center">
+      <div style={{ fontSize: 14, marginTop: -5 }} className="center">
         <strong>
           Percent
         </strong>
