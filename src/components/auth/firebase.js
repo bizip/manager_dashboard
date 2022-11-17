@@ -116,7 +116,6 @@ const sendPasswordReset = async (email) => {
       theme: 'light',
     });
   } catch (err) {
-    console.log(err, 'Erroooooooooooooooooooooo');
     toast.error(err, {
       position: 'top-right',
       autoClose: 5000,
