@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TbBuildingSkyscraper } from 'react-icons/tb';
+// import { collection, getDocs } from 'firebase/filestore';
 import { ImHome } from 'react-icons/im';
 import { FaBatteryThreeQuarters } from 'react-icons/fa';
+// import { collection, getDocs } from 'firebase/firestore';
 import Alert from '../shared/Alert';
 import Card from '../shared/Card';
 import BarChart from '../shared/BarChart';
@@ -10,6 +12,7 @@ import Donutchart from '../shared/Donutchart';
 import { cardList, targetList, trachTrack } from '../shared/Data';
 import TrackBoard from '../shared/TrackBoard';
 import TargetBord from '../shared/TargetBord';
+// import { db } from '../auth/firebase';
 
 const Board = () => (
   <section className="mid_dashboard">
@@ -75,5 +78,4 @@ const Board = () => (
     </section>
   </section>
 );
-
 export default Board;
