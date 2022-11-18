@@ -10,12 +10,10 @@ const lineChartSlice = createSlice({
   name: 'lineChart',
   initialState,
   reducers: {
-    getDataFromFirebase(state) {
+    getDataFromFirebase() {
       const colRef = collection(db, 'datasets');
       getDocs(colRef).then((snapshots) => {
-        snapshots.docs.map((item) => {
-          console.log(item.data);
-        });
+        snapshots.docs.map((item) => item.data());
       });
     },
   },

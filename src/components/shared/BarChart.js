@@ -4,9 +4,6 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../auth/firebase';
 
 const BarChart = () => {
-  const [result, setResult] = useState([]);
-
-  console.log(result, 'result from data');
   const [chartData, setChartData] = useState({
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [{
@@ -65,12 +62,10 @@ const BarChart = () => {
           details.push({ ...item.data(), id: item.id });
         });
         setChartData({ ...chartData, datasets: details });
-      }).catch((err) => {
-        console.log(err);
       });
     };
     handleSyncData();
-  }, []);
+  }, [chartData]);
   const [lightOptions] = useState({
     maintainAspectRatio: false,
     aspectRatio: 0.6,

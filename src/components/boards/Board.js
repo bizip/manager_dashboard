@@ -1,27 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TbBuildingSkyscraper } from 'react-icons/tb';
-// import { collection, getDocs } from 'firebase/filestore';
 import { ImHome } from 'react-icons/im';
 import { FaBatteryThreeQuarters } from 'react-icons/fa';
-// import { collection, getDocs } from 'firebase/firestore';
-// import { useDispatch, useSelector } from 'react-redux';
+import { collection, getDocs } from 'firebase/firestore';
 import Alert from '../shared/Alert';
 import Card from '../shared/Card';
 import BarChart from '../shared/BarChart';
 import Donutchart from '../shared/Donutchart';
-import { targetList, trachTrack } from '../shared/Data';
 import TrackBoard from '../shared/TrackBoard';
 import TargetBord from '../shared/TargetBord';
-import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../auth/firebase';
-// import { lineChartActions } from '../../redux/linechart/LineChartSlice';
-
-// import { db } from '../auth/firebase';
 
 const Board = () => {
   const [cardList, setCardList] = useState([]);
-  // const [targetList,setTargetList] =useState([])
+  const [targetList, setTargetList] = useState([]);
+  const [trackList, setTrackList] = useState([]);
 
   useEffect(() => {
     const handleSyncData = async () => {
@@ -32,32 +26,38 @@ const Board = () => {
           details.push({ ...item.data(), id: item.id });
         });
         setCardList(details);
-      }).catch((err) => {
-        console.log(err);
       });
     };
     handleSyncData();
   }, []);
-  
-    useEffect(() => {
-      const handleSyncData = async () => {
-        const colRef = await collection(db, 'summary');
-        getDocs(colRef).then((snapshots) => {
-          const details = [];
-          snapshots.docs.forEach((item) => {
-            details.push({ ...item.data(), id: item.id });
-          });
-          // setCardList(details);
-          console.log(details,"Complete summary---------------------------------------")
-        }).catch((err) => {
-          console.log(err);
+
+  useEffect(() => {
+    const handleSyncData = async () => {
+      const colRef = await collection(db, 'targetList');
+      getDocs(colRef).then((snapshots) => {
+        const details = [];
+        snapshots.docs.forEach((item) => {
+          details.push({ ...item.data(), id: item.id });
         });
-      };
-      handleSyncData();
-    }, []);
-  
-  
-  console.log(cardList, "}}}}}}}}}}}}}}}}}}}}}")
+        setTargetList(details);
+      });
+    };
+    handleSyncData();
+  }, []);
+
+  useEffect(() => {
+    const handleSyncData = async () => {
+      const colRef = await collection(db, 'trackBoard');
+      getDocs(colRef).then((snapshots) => {
+        const details = [];
+        snapshots.docs.forEach((item) => {
+          details.push({ ...item.data(), id: item.id });
+        });
+        setTrackList(details);
+      });
+    };
+    handleSyncData();
+  }, []);
   return (
     <section className="mid_dashboard">
       <div className="board">
@@ -95,7 +95,7 @@ const Board = () => {
       </div>
       <Alert />
       <section className="card__list">
-        {cardList.length>0 &&  cardList.map((item,index) => (<Card key={index} item={item} />))}
+        {cardList.length > 0 && cardList.map((item) => (<Card key={item.id} item={item} />))}
       </section>
       <section className="chart__container">
         <div className="trafic">
@@ -106,7 +106,7 @@ const Board = () => {
         </div>
       </section>
       <section className="track">
-        {trachTrack.map((item) => (<TrackBoard key={item.id} item={item} />))}
+        {trackList.map((item) => (<TrackBoard key={item.id} item={item} />))}
       </section>
 
       <section className="target">
