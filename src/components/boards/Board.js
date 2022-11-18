@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TbBuildingSkyscraper } from 'react-icons/tb';
 // import { collection, getDocs } from 'firebase/filestore';
@@ -10,51 +10,54 @@ import Alert from '../shared/Alert';
 import Card from '../shared/Card';
 import BarChart from '../shared/BarChart';
 import Donutchart from '../shared/Donutchart';
-import { cardList, targetList, trachTrack } from '../shared/Data';
+import { targetList, trachTrack } from '../shared/Data';
 import TrackBoard from '../shared/TrackBoard';
 import TargetBord from '../shared/TargetBord';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../auth/firebase';
 // import { lineChartActions } from '../../redux/linechart/LineChartSlice';
 
 // import { db } from '../auth/firebase';
 
 const Board = () => {
-  const [cardList, setCardList] = useState([{
-    id: 1,
-    title: 'NEW ACCOUNT',
-    icon: <IoIosArrowUp className="left__icon" />,
-    value: 234,
-    iconRight: '%',
-    roundPercentage: 68,
-    borderColor: '#3b82f6',
-  },
-  {
-    id: 2,
-    title: 'TOTAL EXPENSES',
-    icon: <IoIosArrowDown className="left__icon" />,
-    value: 234,
-    iconRight: '%',
-    roundPercentage: 62,
-    borderColor: 'red',
-  },
-  {
-    id: 3,
-    title: 'COMPANY VALUE',
-    icon: <BsCurrencyDollar className="left__icon" />,
-    value: 234,
-    iconRight: '%',
-    roundPercentage: 72,
-    borderColor: 'orange',
-  },
-  {
-    id: 4,
-    title: 'NEW EMPLOYEES',
-    icon: <AiOutlinePlus className="left__icon" />,
-    value: 234,
-    iconRight: '%',
-    roundPercentage: 81,
-    borderColor: 'green',
-  },
-  ]);
+  const [cardList, setCardList] = useState([]);
+  // const [targetList,setTargetList] =useState([])
+
+  useEffect(() => {
+    const handleSyncData = async () => {
+      const colRef = await collection(db, 'cardDta');
+      getDocs(colRef).then((snapshots) => {
+        const details = [];
+        snapshots.docs.forEach((item) => {
+          details.push({ ...item.data(), id: item.id });
+        });
+        setCardList(details);
+      }).catch((err) => {
+        console.log(err);
+      });
+    };
+    handleSyncData();
+  }, []);
+  
+    useEffect(() => {
+      const handleSyncData = async () => {
+        const colRef = await collection(db, 'summary');
+        getDocs(colRef).then((snapshots) => {
+          const details = [];
+          snapshots.docs.forEach((item) => {
+            details.push({ ...item.data(), id: item.id });
+          });
+          // setCardList(details);
+          console.log(details,"Complete summary---------------------------------------")
+        }).catch((err) => {
+          console.log(err);
+        });
+      };
+      handleSyncData();
+    }, []);
+  
+  
+  console.log(cardList, "}}}}}}}}}}}}}}}}}}}}}")
   return (
     <section className="mid_dashboard">
       <div className="board">
@@ -92,7 +95,7 @@ const Board = () => {
       </div>
       <Alert />
       <section className="card__list">
-        {cardList.map((item) => (<Card key={item.id} item={item} />))}
+        {cardList.length>0 &&  cardList.map((item,index) => (<Card key={index} item={item} />))}
       </section>
       <section className="chart__container">
         <div className="trafic">

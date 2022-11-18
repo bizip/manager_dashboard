@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CircularProgressBar from './CircularProgressBar';
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { BsCurrencyDollar } from 'react-icons/bs';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 const Card = (props) => {
   const {
@@ -8,6 +11,8 @@ const Card = (props) => {
       title, icon, value, iconRight, roundPercentage, borderColor,
     },
   } = props;
+
+  console.log(roundPercentage,"_____________")
   return (
     <div className="card_one" style={{ borderBottom: `4px solid ${borderColor}` }}>
       <div>
@@ -19,7 +24,7 @@ const Card = (props) => {
         </div>
       </div>
       <div className="circular">
-        <CircularProgressBar roundPercentage={roundPercentage} />
+        <CircularProgressBar roundPercentage={roundPercentage=== 'undefined'? roundPercentage: 67} />
       </div>
     </div>
   );
