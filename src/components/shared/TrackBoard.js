@@ -1,4 +1,5 @@
 import React from 'react';
+// import { BsCurrencyDollar } from 'react-icons/bs';
 
 const TrackBoard = (props) => {
   const {
@@ -11,7 +12,10 @@ const TrackBoard = (props) => {
         <div className="numbers">
           {icon}
           <span className="value">{value}</span>
-          <span className="right__icon">{iconRight}</span>
+          <span className="right__icon">
+            {' '}
+            {iconRight}
+          </span>
         </div>
       </div>
       <div className="circular">

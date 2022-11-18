@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Chart } from 'primereact/chart';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../auth/firebase';
 
 const BarChart = () => {
-  const [chartData] = useState({
+  const [chartData, setChartData] = useState({
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [{
       type: 'line',
@@ -51,6 +53,19 @@ const BarChart = () => {
     }],
   });
 
+  useEffect(() => {
+    const handleSyncData = async () => {
+      const colRef = await collection(db, 'datasets');
+      getDocs(colRef).then((snapshots) => {
+        const details = [];
+        snapshots.docs.forEach((item) => {
+          details.push({ ...item.data(), id: item.id });
+        });
+        setChartData({ ...chartData, datasets: details });
+      });
+    };
+    handleSyncData();
+  });
   const [lightOptions] = useState({
     maintainAspectRatio: false,
     aspectRatio: 0.6,
