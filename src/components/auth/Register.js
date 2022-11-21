@@ -13,6 +13,10 @@ import {
 function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [houseNumber, setHouseNumber] = useState('');
+  const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [postCode, setPostCode] = useState('');
   const [name, setName] = useState('');
   const [user, loading] = useAuthState(auth);
   const [isLoading, setIsLoading] = useState(false);
@@ -98,7 +102,8 @@ function Register() {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            registerWithEmailAndPassword(name, email, password, downloadURL);
+            registerWithEmailAndPassword(name, email, password, downloadURL,
+              houseNumber, street, city, postCode);
             setIsLoading(false);
           });
         },
@@ -154,6 +159,42 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
+        <section className="location">
+          <p>
+            Location and notes
+          </p>
+          <input
+            type="text"
+            className="register__textBox"
+            value={houseNumber}
+            onChange={(e) => setHouseNumber(e.target.value)}
+            placeholder="House number"
+          />
+          <input
+            type="text"
+            className="register__textBox"
+            value={street}
+            onChange={(e) => setStreet(e.target.value)}
+            placeholder="Street"
+          />
+          <div className="subsection">
+            <input
+              type="text"
+              className="register__textBox"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="City"
+            />
+
+            <input
+              type="text"
+              className="register__textBox"
+              value={postCode}
+              onChange={(e) => setPostCode(e.target.value)}
+              placeholder="Postal code"
+            />
+          </div>
+        </section>
         <button type="button" className="register__btn" onClick={register}>
           {isLoading ? 'Registering ...' : 'Register'}
         </button>

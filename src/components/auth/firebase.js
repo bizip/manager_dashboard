@@ -78,7 +78,8 @@ const logInWithEmailAndPassword = async (email, password) => {
     });
   }
 };
-const registerWithEmailAndPassword = async (name, email, password, downloadURL) => {
+const registerWithEmailAndPassword = async (name, email, password, downloadURL,
+  houseNumber, street, city, postCode) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const { user } = res;
@@ -88,6 +89,10 @@ const registerWithEmailAndPassword = async (name, email, password, downloadURL) 
       authProvider: 'local',
       email,
       profileURL: downloadURL,
+      houseNumber,
+      street,
+      city,
+      postCode,
     });
   } catch (err) {
     toast.error(err, {

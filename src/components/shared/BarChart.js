@@ -65,7 +65,7 @@ const BarChart = () => {
       });
     };
     handleSyncData();
-  });
+  }, []);
   const [lightOptions] = useState({
     maintainAspectRatio: false,
     aspectRatio: 0.6,
