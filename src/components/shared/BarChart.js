@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Chart } from 'primereact/chart';
 import { collection, getDocs } from 'firebase/firestore';
+import { Skeleton } from '@chakra-ui/react';
 import { db } from '../auth/firebase';
 
 const BarChart = () => {
   const [chartData, setChartData] = useState({
+    status: 'Loading',
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [{
       type: 'line',
@@ -61,7 +63,7 @@ const BarChart = () => {
         snapshots.docs.forEach((item) => {
           details.push({ ...item.data(), id: item.id });
         });
-        setChartData({ ...chartData, datasets: details });
+        setChartData({ ...chartData, datasets: details, status: 'OK' });
       });
     };
     handleSyncData();
@@ -96,9 +98,18 @@ const BarChart = () => {
     },
   });
 
+  console.log(chartData.status, '+++++++++++++++++');
+
   return (
     <div className="chart__card">
-      <Chart type="bar" data={chartData} options={lightOptions} />
+      {chartData.status === 'OK'
+        && <Chart type="bar" data={chartData} options={lightOptions} />}
+      {chartData.status !== 'OK'
+      && (
+      <Skeleton className="bar_skeleton">
+        <h1>Loading ...</h1>
+      </Skeleton>
+      )}
     </div>
   );
 };

@@ -11,12 +11,14 @@ import Donutchart from '../shared/Donutchart';
 import TrackBoard from '../shared/TrackBoard';
 import TargetBord from '../shared/TargetBord';
 import { db } from '../auth/firebase';
+import { Skeleton } from '@chakra-ui/react';
 
 const Board = () => {
   const [cardList, setCardList] = useState([]);
   const [targetList, setTargetList] = useState([]);
   const [trackList, setTrackList] = useState([]);
-
+  // const [loading,setLoading] = useState(false)
+  const skeletonArr = [1, 2, 3, 4];
   useEffect(() => {
     const handleSyncData = async () => {
       const colRef = await collection(db, 'cardDta');
@@ -51,7 +53,7 @@ const Board = () => {
       getDocs(colRef).then((snapshots) => {
         const details = [];
         snapshots.docs.forEach((item) => {
-          details.push({ ...item.data(), id: item.id });
+          details.push({ ...item.data(), id: item.id, status: "OK" });
         });
         setTrackList(details);
       });
@@ -95,7 +97,10 @@ const Board = () => {
       </div>
       <Alert />
       <section className="card__list">
+
         {cardList.length > 0 && cardList.map((item) => (<Card key={item.id} item={item} />))}
+
+
       </section>
       <section className="chart__container">
         <div className="trafic">
