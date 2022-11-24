@@ -50,6 +50,7 @@ function Register() {
   };
 
   const handleCountry = (e) => {
+  
     setCountry(e.target.value);
   };
 
@@ -113,6 +114,7 @@ function Register() {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             registerWithEmailAndPassword(name, email, password, downloadURL,
               continent, country, city, postCode);
+              console.log( continent, country,"TTTTTTTTTT")
             setIsLoading(false);
           });
         },
@@ -174,15 +176,15 @@ function Register() {
             Location and notes
           </p>
           <select id="continent" name="continent" className="register__textBox" onChange={handleContinent}>
-            <option value="africa">Africa</option>
-            <option value="asia">Asia</option>
+          <option value="asia">Asia</option>
+          <option value="africa">Africa</option>
             <option value="europe">Europe</option>
             <option value="northamerica">North America</option>
           </select>
 
           <select id="country" name="country" className="register__textBox" onChange={handleCountry}>
-            <option value="rwanda">Rwanda</option>
-            <option value="uganda">Uganda</option>
+          <option value="uganda">Uganda</option>
+          <option value="rwanda">Rwanda</option>
             <option value="drc">DRC</option>
             <option value="kenya">Kenya</option>
           </select>
