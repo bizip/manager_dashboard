@@ -6,7 +6,6 @@ import { FaBatteryThreeQuarters } from 'react-icons/fa';
 import {
   collection, doc, getDoc, getDocs, query, where,
 } from 'firebase/firestore';
-import { Skeleton } from '@chakra-ui/react';
 import Alert from '../shared/Alert';
 import Card from '../shared/Card';
 import BarChart from '../shared/BarChart';
@@ -14,19 +13,19 @@ import Donutchart from '../shared/Donutchart';
 import TrackBoard from '../shared/TrackBoard';
 import TargetBord from '../shared/TargetBord';
 import { db } from '../auth/firebase';
-import { loggedInUserAuth } from '../../context/UserDataContextProvider';
+import { useLoggedInUserAuth } from '../../context/UserDataContextProvider';
 
 const Board = () => {
   const [cardList, setCardList] = useState([]);
   const [targetList, setTargetList] = useState([]);
   const [trackList, setTrackList] = useState([]);
-  const [currentUserLocation,setCurrentUserLocation] = useState('');
+  const [currentUserLocation, setCurrentUserLocation] = useState('');
   // const [loading,setLoading] = useState(false)
 
-  const { currentLoggedInUser } = loggedInUserAuth();
+  const { currentLoggedInUser } = useLoggedInUserAuth();
 
   // console.log(currentLoggedInUser, 'this is curent user');
-  const skeletonArr = [1, 2, 3, 4];
+  // const skeletonArr = [1, 2, 3, 4];
   useEffect(() => {
     const handleSyncData = async () => {
       const colRef = await collection(db, 'cardDta');
@@ -70,22 +69,17 @@ const Board = () => {
   }, []);
 
   useEffect(() => {
-
     const fetchUserLocation = async () => {
-      if(currentLoggedInUser){
-        const q = query(collection(db, "users"), where("uid", "==", currentLoggedInUser?.uid));
+      if (currentLoggedInUser) {
+        const q = query(collection(db, 'users'), where('uid', '==', currentLoggedInUser?.uid));
         const docSnap = await getDocs(q);
-        const userData = docSnap.docs[0].data()
+        const userData = docSnap.docs[0].data();
         setCurrentUserLocation(userData.city);
       }
-      
-    }
+    };
     fetchUserLocation();
-    
- 
   }, []);
   const handleSyncData = async () => {
-     
     const dataRef = doc(db, `kapsuledata/africa/${currentUserLocation}/February`);
     const docSnap = await getDoc(dataRef);
     if (docSnap.exists()) {
@@ -94,9 +88,8 @@ const Board = () => {
       console.log('No such document!');
     }
   };
-  if(currentUserLocation){
+  if (currentUserLocation) {
     handleSyncData();
-    console.log(currentUserLocation, "+++++++++++++++++++++");
   }
   return (
     <section className="mid_dashboard">

@@ -79,7 +79,7 @@ const logInWithEmailAndPassword = async (email, password) => {
   }
 };
 const registerWithEmailAndPassword = async (name, email, password, downloadURL,
-  houseNumber, street, city, postCode) => {
+  continent, country, city, postCode) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const { user } = res;
@@ -89,8 +89,8 @@ const registerWithEmailAndPassword = async (name, email, password, downloadURL,
       authProvider: 'local',
       email,
       profileURL: downloadURL,
-      houseNumber,
-      street,
+      continent,
+      country,
       city,
       postCode,
     });
@@ -132,16 +132,6 @@ const sendPasswordReset = async (email) => {
       theme: 'light',
     });
   }
-};
-const getCurrentUser = () => {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      console.log('This is the user: ', user);
-    } else {
-      // No user is signed in.
-      console.log('There is no logged in user');
-    }
-  });
 };
 
 const logout = () => {
