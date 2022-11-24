@@ -74,7 +74,7 @@ const Board = () => {
         const q = query(collection(db, 'users'), where('uid', '==', currentLoggedInUser?.uid));
         const docSnap = await getDocs(q);
         const userData = docSnap.docs[0].data();
-        console.log(userData)
+        console.log(userData);
         setCurrentUserLocation(userData.country);
       }
     };
