@@ -98,8 +98,6 @@ const BarChart = () => {
     },
   });
 
-  console.log(chartData.status, '+++++++++++++++++');
-
   return (
     <div className="chart__card">
       {chartData.status === 'OK'

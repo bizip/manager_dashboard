@@ -133,6 +133,17 @@ const sendPasswordReset = async (email) => {
     });
   }
 };
+const getCurrentUser = () => {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      console.log('This is the user: ', user);
+    } else {
+      // No user is signed in.
+      console.log('There is no logged in user');
+    }
+  });
+};
+
 const logout = () => {
   signOut(auth);
 };

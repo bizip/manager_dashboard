@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { TbBuildingSkyscraper } from 'react-icons/tb';
 import { ImHome } from 'react-icons/im';
 import { FaBatteryThreeQuarters } from 'react-icons/fa';
-import { collection, getDocs } from 'firebase/firestore';
+import {
+  collection, doc, getDoc, getDocs, query, where,
+} from 'firebase/firestore';
+import { Skeleton } from '@chakra-ui/react';
 import Alert from '../shared/Alert';
 import Card from '../shared/Card';
 import BarChart from '../shared/BarChart';
@@ -11,13 +14,18 @@ import Donutchart from '../shared/Donutchart';
 import TrackBoard from '../shared/TrackBoard';
 import TargetBord from '../shared/TargetBord';
 import { db } from '../auth/firebase';
-import { Skeleton } from '@chakra-ui/react';
+import { loggedInUserAuth } from '../../context/UserDataContextProvider';
 
 const Board = () => {
   const [cardList, setCardList] = useState([]);
   const [targetList, setTargetList] = useState([]);
   const [trackList, setTrackList] = useState([]);
+  const [currentUserLocation,setCurrentUserLocation] = useState('');
   // const [loading,setLoading] = useState(false)
+
+  const { currentLoggedInUser } = loggedInUserAuth();
+
+  // console.log(currentLoggedInUser, 'this is curent user');
   const skeletonArr = [1, 2, 3, 4];
   useEffect(() => {
     const handleSyncData = async () => {
@@ -53,13 +61,43 @@ const Board = () => {
       getDocs(colRef).then((snapshots) => {
         const details = [];
         snapshots.docs.forEach((item) => {
-          details.push({ ...item.data(), id: item.id, status: "OK" });
+          details.push({ ...item.data(), id: item.id, status: 'OK' });
         });
         setTrackList(details);
       });
     };
     handleSyncData();
   }, []);
+
+  useEffect(() => {
+
+    const fetchUserLocation = async () => {
+      if(currentLoggedInUser){
+        const q = query(collection(db, "users"), where("uid", "==", currentLoggedInUser?.uid));
+        const docSnap = await getDocs(q);
+        const userData = docSnap.docs[0].data()
+        setCurrentUserLocation(userData.city);
+      }
+      
+    }
+    fetchUserLocation();
+    
+ 
+  }, []);
+  const handleSyncData = async () => {
+     
+    const dataRef = doc(db, `kapsuledata/africa/${currentUserLocation}/February`);
+    const docSnap = await getDoc(dataRef);
+    if (docSnap.exists()) {
+      console.log('Document data:', docSnap.data());
+    } else {
+      console.log('No such document!');
+    }
+  };
+  if(currentUserLocation){
+    handleSyncData();
+    console.log(currentUserLocation, "+++++++++++++++++++++");
+  }
   return (
     <section className="mid_dashboard">
       <div className="board">
@@ -99,7 +137,6 @@ const Board = () => {
       <section className="card__list">
 
         {cardList.length > 0 && cardList.map((item) => (<Card key={item.id} item={item} />))}
-
 
       </section>
       <section className="chart__container">
