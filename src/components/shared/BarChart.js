@@ -67,7 +67,9 @@ const BarChart = () => {
       });
     };
     handleSyncData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const [lightOptions] = useState({
     maintainAspectRatio: false,
     aspectRatio: 0.6,

@@ -113,7 +113,6 @@ function Register() {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             registerWithEmailAndPassword(name, email, password, downloadURL,
               continent, country, city, postCode);
-            console.log(continent, country, 'TTTTTTTTTT');
             setIsLoading(false);
           });
         },

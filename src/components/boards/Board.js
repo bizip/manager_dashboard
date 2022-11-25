@@ -6,6 +6,7 @@ import { FaBatteryThreeQuarters } from 'react-icons/fa';
 import {
   collection, doc, getDoc, getDocs, query, where,
 } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 import Alert from '../shared/Alert';
 import Card from '../shared/Card';
 import BarChart from '../shared/BarChart';
@@ -16,29 +17,13 @@ import { db } from '../auth/firebase';
 import { useLoggedInUserAuth } from '../../context/UserDataContextProvider';
 
 const Board = () => {
-  const [cardList, setCardList] = useState([]);
+  const [newCardList, setNewCardList] = useState([]);
   const [targetList, setTargetList] = useState([]);
   const [trackList, setTrackList] = useState([]);
   const [currentUserLocation, setCurrentUserLocation] = useState('');
-  // const [loading,setLoading] = useState(false)
+  const [currentUserContinent, setCurrentUserContinent] = useState('');
 
   const { currentLoggedInUser } = useLoggedInUserAuth();
-
-  // console.log(currentLoggedInUser, 'this is curent user');
-  // const skeletonArr = [1, 2, 3, 4];
-  useEffect(() => {
-    const handleSyncData = async () => {
-      const colRef = await collection(db, 'cardDta');
-      getDocs(colRef).then((snapshots) => {
-        const details = [];
-        snapshots.docs.forEach((item) => {
-          details.push({ ...item.data(), id: item.id });
-        });
-        setCardList(details);
-      });
-    };
-    handleSyncData();
-  }, []);
 
   useEffect(() => {
     const handleSyncData = async () => {
@@ -74,24 +59,39 @@ const Board = () => {
         const q = query(collection(db, 'users'), where('uid', '==', currentLoggedInUser?.uid));
         const docSnap = await getDocs(q);
         const userData = docSnap.docs[0].data();
-        console.log(userData);
+        setCurrentUserContinent(userData.continent);
         setCurrentUserLocation(userData.country);
       }
     };
     fetchUserLocation();
-  }, []);
+  }, [currentLoggedInUser]);
+
   const handleSyncData = async () => {
-    const dataRef = doc(db, `kapsuledata/africa/${currentUserLocation}/February`);
+    const dataRef = doc(db, `kapsuledata/${currentUserContinent}/${currentUserLocation}/grephdata`);
     const docSnap = await getDoc(dataRef);
     if (docSnap.exists()) {
-      console.log('Document data:', docSnap.data());
+      const result = docSnap.data();
+      setNewCardList((result.cardList));
     } else {
-      console.log('No such document!');
+      toast.error('No such document!', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     }
   };
-  if (currentUserLocation) {
-    handleSyncData();
-  }
+
+  useEffect(() => {
+    if (currentUserLocation) {
+      handleSyncData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUserLocation]);
   return (
     <section className="mid_dashboard">
       <div className="board">
@@ -130,7 +130,7 @@ const Board = () => {
       <Alert />
       <section className="card__list">
 
-        {cardList.length > 0 && cardList.map((item) => (<Card key={item.id} item={item} />))}
+        {newCardList.length > 0 && newCardList.map((item) => (<Card key={item.id} item={item} />))}
 
       </section>
       <section className="chart__container">
