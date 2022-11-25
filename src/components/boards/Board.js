@@ -6,6 +6,7 @@ import { FaBatteryThreeQuarters } from 'react-icons/fa';
 import {
   collection, doc, getDoc, getDocs, query, where,
 } from 'firebase/firestore';
+import { Skeleton } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
 import Alert from '../shared/Alert';
 import Card from '../shared/Card';
@@ -15,6 +16,7 @@ import TrackBoard from '../shared/TrackBoard';
 import TargetBord from '../shared/TargetBord';
 import { db } from '../auth/firebase';
 import { useLoggedInUserAuth } from '../../context/UserDataContextProvider';
+// import { cardList } from '../shared/Data';
 
 const Board = () => {
   const [newCardList, setNewCardList] = useState([]);
@@ -92,6 +94,8 @@ const Board = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUserLocation]);
+
+  const fakeArr = [1, 2, 3, 4];
   return (
     <section className="mid_dashboard">
       <div className="board">
@@ -129,7 +133,8 @@ const Board = () => {
       </div>
       <Alert />
       <section className="card__list">
-
+        {/* eslint-disable-next-line react/jsx-key */}
+        {newCardList.length === 0 && fakeArr.map(() => (<Skeleton className="card_one"><div className="card_one">kkkkkkkkkjjjjjjjjj</div></Skeleton>))}
         {newCardList.length > 0 && newCardList.map((item) => (<Card key={item.id} item={item} />))}
 
       </section>

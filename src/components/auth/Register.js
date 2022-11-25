@@ -178,11 +178,13 @@ function Register() {
             <option value="africa">Africa</option>
             <option value="europe">Europe</option>
             <option value="northamerica">North America</option>
+
           </select>
 
           <select id="country" name="country" className="register__textBox" onChange={handleCountry}>
             <option value="uganda">Uganda</option>
             <option value="rwanda">Rwanda</option>
+            <option value="japan">Japan</option>
             <option value="drc">DRC</option>
             <option value="kenya">Kenya</option>
           </select>
