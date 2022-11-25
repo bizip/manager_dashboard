@@ -24,7 +24,7 @@ const Board = () => {
   const [trackList, setTrackList] = useState([]);
   const [currentUserLocation, setCurrentUserLocation] = useState('');
   const [currentUserContinent, setCurrentUserContinent] = useState('');
-
+  const [BarChartData, setBarchartData] = useState([]);
   const { currentLoggedInUser } = useLoggedInUserAuth();
 
   useEffect(() => {
@@ -74,6 +74,7 @@ const Board = () => {
     if (docSnap.exists()) {
       const result = docSnap.data();
       setNewCardList((result.cardList));
+      setBarchartData(result.datasets);
     } else {
       toast.error('No such document!', {
         position: 'top-right',
@@ -87,7 +88,6 @@ const Board = () => {
       });
     }
   };
-
   useEffect(() => {
     if (currentUserLocation) {
       handleSyncData();
@@ -140,7 +140,7 @@ const Board = () => {
       </section>
       <section className="chart__container">
         <div className="trafic">
-          <BarChart />
+          <BarChart item={BarChartData} />
         </div>
         <div className="income">
           <Donutchart />
