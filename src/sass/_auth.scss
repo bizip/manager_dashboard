@@ -37,7 +37,7 @@
 //   Register styles
 
 .register {
-  height: 100vh;
+  font-size: 1.6rem;
   width: 100vw;
   display: flex;
   align-items: center;
@@ -54,13 +54,13 @@
 
 .register__textBox {
   padding: 10px;
-  font-size: 18px;
+  font-size: 1.6rem;
   margin-bottom: 10px;
 }
 
 .register__btn {
   padding: 10px;
-  font-size: 18px;
+  font-size: 1.6rem;
   margin-bottom: 10px;
   border: none;
   color: white;
@@ -95,13 +95,13 @@
 
 .login__textBox {
   padding: 10px;
-  font-size: 18px;
+  font-size: 1.6rem;
   margin-bottom: 10px;
 }
 
 .login__btn {
   padding: 10px;
-  font-size: 18px;
+  font-size: 1.6rem;
   margin-bottom: 10px;
   border: none;
   color: white;

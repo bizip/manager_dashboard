@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { ChakraProvider } from '@chakra-ui/react';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/configureStore';
@@ -11,10 +12,12 @@ import store from './redux/configureStore';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ToastContainer />
-      <App />
-    </Provider>
+    <ChakraProvider>
+      <Provider store={store}>
+        <ToastContainer />
+        <App />
+      </Provider>
+    </ChakraProvider>
   </React.StrictMode>,
 );
 

@@ -13,6 +13,10 @@ import {
 function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [continent, setContinent] = useState('');
+  const [country, setCountry] = useState('');
+  const [city, setCity] = useState('');
+  const [postCode, setPostCode] = useState('');
   const [name, setName] = useState('');
   const [user, loading] = useAuthState(auth);
   const [isLoading, setIsLoading] = useState(false);
@@ -40,6 +44,15 @@ function Register() {
     }
     setFile(file);
   };
+
+  const handleContinent = (e) => {
+    setContinent(e.target.value);
+  };
+
+  const handleCountry = (e) => {
+    setCountry(e.target.value);
+  };
+
   useEffect(() => {
     let fileReader; let
       isCancel = false;
@@ -98,7 +111,8 @@ function Register() {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            registerWithEmailAndPassword(name, email, password, downloadURL);
+            registerWithEmailAndPassword(name, email, password, downloadURL,
+              continent, country, city, postCode);
             setIsLoading(false);
           });
         },
@@ -135,6 +149,7 @@ function Register() {
           <label htmlFor="image"> Browse images</label>
           <input
             type="file"
+            required
             id="image"
             accept=".png, .jpg, .jpeg"
             onChange={changeHandler}
@@ -154,6 +169,43 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
+        <section className="location">
+          <p>
+            Location and notes
+          </p>
+          <select id="continent" name="continent" className="register__textBox" onChange={handleContinent}>
+            <option value="asia">Asia</option>
+            <option value="africa">Africa</option>
+            <option value="europe">Europe</option>
+            <option value="northamerica">North America</option>
+
+          </select>
+
+          <select id="country" name="country" className="register__textBox" onChange={handleCountry}>
+            <option value="uganda">Uganda</option>
+            <option value="rwanda">Rwanda</option>
+            <option value="japan">Japan</option>
+            <option value="drc">DRC</option>
+            <option value="kenya">Kenya</option>
+          </select>
+          <div className="subsection">
+            <input
+              type="text"
+              className="register__textBox"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="City"
+            />
+
+            <input
+              type="text"
+              className="register__textBox"
+              value={postCode}
+              onChange={(e) => setPostCode(e.target.value)}
+              placeholder="Postal code"
+            />
+          </div>
+        </section>
         <button type="button" className="register__btn" onClick={register}>
           {isLoading ? 'Registering ...' : 'Register'}
         </button>

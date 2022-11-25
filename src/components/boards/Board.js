@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import { TbBuildingSkyscraper } from 'react-icons/tb';
 import { ImHome } from 'react-icons/im';
 import { FaBatteryThreeQuarters } from 'react-icons/fa';
-import { collection, getDocs } from 'firebase/firestore';
+import {
+  collection, doc, getDoc, getDocs, query, where,
+} from 'firebase/firestore';
+import { Skeleton } from '@chakra-ui/react';
+import { toast } from 'react-toastify';
 import Alert from '../shared/Alert';
 import Card from '../shared/Card';
 import BarChart from '../shared/BarChart';
@@ -11,25 +15,17 @@ import Donutchart from '../shared/Donutchart';
 import TrackBoard from '../shared/TrackBoard';
 import TargetBord from '../shared/TargetBord';
 import { db } from '../auth/firebase';
+import { useLoggedInUserAuth } from '../../context/UserDataContextProvider';
+// import { cardList } from '../shared/Data';
 
 const Board = () => {
-  const [cardList, setCardList] = useState([]);
+  const [newCardList, setNewCardList] = useState([]);
   const [targetList, setTargetList] = useState([]);
   const [trackList, setTrackList] = useState([]);
-
-  useEffect(() => {
-    const handleSyncData = async () => {
-      const colRef = await collection(db, 'cardDta');
-      getDocs(colRef).then((snapshots) => {
-        const details = [];
-        snapshots.docs.forEach((item) => {
-          details.push({ ...item.data(), id: item.id });
-        });
-        setCardList(details);
-      });
-    };
-    handleSyncData();
-  }, []);
+  const [currentUserLocation, setCurrentUserLocation] = useState('');
+  const [currentUserContinent, setCurrentUserContinent] = useState('');
+  const [BarChartData, setBarchartData] = useState([]);
+  const { currentLoggedInUser } = useLoggedInUserAuth();
 
   useEffect(() => {
     const handleSyncData = async () => {
@@ -51,13 +47,55 @@ const Board = () => {
       getDocs(colRef).then((snapshots) => {
         const details = [];
         snapshots.docs.forEach((item) => {
-          details.push({ ...item.data(), id: item.id });
+          details.push({ ...item.data(), id: item.id, status: 'OK' });
         });
         setTrackList(details);
       });
     };
     handleSyncData();
   }, []);
+
+  useEffect(() => {
+    const fetchUserLocation = async () => {
+      if (currentLoggedInUser) {
+        const q = query(collection(db, 'users'), where('uid', '==', currentLoggedInUser?.uid));
+        const docSnap = await getDocs(q);
+        const userData = docSnap.docs[0].data();
+        setCurrentUserContinent(userData.continent);
+        setCurrentUserLocation(userData.country);
+      }
+    };
+    fetchUserLocation();
+  }, [currentLoggedInUser]);
+
+  const handleSyncData = async () => {
+    const dataRef = doc(db, `kapsuledata/${currentUserContinent}/${currentUserLocation}/grephdata`);
+    const docSnap = await getDoc(dataRef);
+    if (docSnap.exists()) {
+      const result = docSnap.data();
+      setNewCardList((result.cardList));
+      setBarchartData(result.datasets);
+    } else {
+      toast.error('No such document!', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    }
+  };
+  useEffect(() => {
+    if (currentUserLocation) {
+      handleSyncData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUserLocation]);
+
+  const fakeArr = [1, 2, 3, 4];
   return (
     <section className="mid_dashboard">
       <div className="board">
@@ -95,11 +133,14 @@ const Board = () => {
       </div>
       <Alert />
       <section className="card__list">
-        {cardList.length > 0 && cardList.map((item) => (<Card key={item.id} item={item} />))}
+        {/* eslint-disable-next-line react/jsx-key */}
+        {newCardList.length === 0 && fakeArr.map(() => (<Skeleton className="card_one"><div className="card_one">kkkkkkkkkjjjjjjjjj</div></Skeleton>))}
+        {newCardList.length > 0 && newCardList.map((item) => (<Card key={item.id} item={item} />))}
+
       </section>
       <section className="chart__container">
         <div className="trafic">
-          <BarChart />
+          <BarChart item={BarChartData} />
         </div>
         <div className="income">
           <Donutchart />
