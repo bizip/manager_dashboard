@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, signInWithEmailAndPassword, signInWithGoogle } from './firebase';
+import { auth, logInWithEmailAndPassword, signInWithGoogle } from './firebase';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -48,7 +48,7 @@ function Login() {
         <button
           type="button"
           className="login__btn"
-          onClick={() => signInWithEmailAndPassword(email, password)}
+          onClick={() => logInWithEmailAndPassword(email, password)}
         >
           Login
         </button>

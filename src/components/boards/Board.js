@@ -119,7 +119,6 @@ const Board = () => {
             </p>
           </span>
         </div>
-
         <div className="board__icons">
           <select id="country" name="country">
             <option value="australia">Select period ...</option>

@@ -14,6 +14,13 @@ const Dropdown = (props) => ((props.isDropDown === true) ? (
       <li className="link_container_drop">
         <div className="link_left">
           <RiLogoutBoxRLine className="link__icon" />
+          <NavLink to="/edit" activeClassName="active" className="link__sidebar" onClick={handleLogoutUser}>Edit Profile</NavLink>
+        </div>
+      </li>
+
+      <li className="link_container_drop">
+        <div className="link_left">
+          <RiLogoutBoxRLine className="link__icon" />
           <NavLink to="." activeClassName="active" className="link__sidebar" onClick={handleLogoutUser}>Logout</NavLink>
         </div>
       </li>
