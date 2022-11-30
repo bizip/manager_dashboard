@@ -1,14 +1,10 @@
 import {
-  collection, getDocs, query, where, doc, updateDoc, setDoc,
+  doc, setDoc,
 } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { useLoggedInUserAuth } from '../../context/UserDataContextProvider';
 import { db } from '../auth/firebase';
 
 const EditProfile = () => {
-  const { currentLoggedInUser } = useLoggedInUserAuth();
-  const [loading, isLoading] = useState(false);
-
   const [editProfileData, setEditProfileData] = useState({
     name: '',
     continent: '',
@@ -37,13 +33,14 @@ const EditProfile = () => {
   }, []);
 
   const handlesubmit = async () => {
-    const docRef = doc(db, 'users', editProfileData.id);
-    setDoc(docRef, editProfileData, { name: 'edited names' })
+    const dataref = doc(db, 'users', editProfileData.id);
+    setDoc(dataref, editProfileData)
       .then((res) => {
-        console.log('Document Field has been updated successfully', res);
+        // console.log(res);
+        // console.log('Entire Document has been updated successfully');
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        // console.log(error);
       });
   };
   return (
@@ -113,8 +110,10 @@ const EditProfile = () => {
               <input
                 type="text"
                 className="register__textBox"
-                                //   value={postCode}
-                                //   onChange={(e) => setPostCode(e.target.value)}
+                onChange={(e) => setEditProfileData({
+                  ...editProfileData,
+                  [e.target.name]: e.target.value,
+                })}
                 placeholder="Postal code"
               />
             </div>
