@@ -27,6 +27,15 @@ const Board = () => {
   const [BarChartData, setBarchartData] = useState([]);
   const { currentLoggedInUser } = useLoggedInUserAuth();
 
+  // const [currentUser,setCurrentUser] = useState({})
+
+  // useEffect(()=>{
+  //   const userHandler=()=>{
+  //     const userFromStorage = await JSON.parse(localStorage.getItem('userDetails'));
+  //   }
+
+  // },[])
+
   useEffect(() => {
     const handleSyncData = async () => {
       const colRef = await collection(db, 'targetList');
@@ -58,9 +67,12 @@ const Board = () => {
   useEffect(() => {
     const fetchUserLocation = async () => {
       if (currentLoggedInUser) {
+        const FromStorage = await JSON.parse(localStorage.getItem('userDetails'));
+        console.log('From stoarage', FromStorage.continent);
         const q = query(collection(db, 'users'), where('uid', '==', currentLoggedInUser?.uid));
         const docSnap = await getDocs(q);
         const userData = docSnap.docs[0].data();
+
         localStorage.setItem('userDetails', JSON.stringify(userData));
         setCurrentUserContinent(userData.continent);
         setCurrentUserLocation(userData.country);
