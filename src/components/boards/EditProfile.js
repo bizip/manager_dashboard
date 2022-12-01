@@ -35,11 +35,11 @@ const EditProfile = () => {
   const handlesubmit = async () => {
     const dataref = doc(db, 'users', editProfileData.id);
     setDoc(dataref, editProfileData)
-      .then((res) => {
+      .then(() => {
         // console.log(res);
         // console.log('Entire Document has been updated successfully');
       })
-      .catch((error) => {
+      .catch(() => {
         // console.log(error);
       });
   };
