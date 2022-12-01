@@ -4,7 +4,7 @@ import { TbBuildingSkyscraper } from 'react-icons/tb';
 import { ImHome } from 'react-icons/im';
 import { FaBatteryThreeQuarters } from 'react-icons/fa';
 import {
-  collection, doc, getDoc, getDocs, query, where,
+  collection, doc, getDoc, getDocs,
 } from 'firebase/firestore';
 import { Skeleton } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
@@ -26,15 +26,6 @@ const Board = () => {
   const [currentUserContinent, setCurrentUserContinent] = useState('');
   const [BarChartData, setBarchartData] = useState([]);
   const { currentLoggedInUser } = useLoggedInUserAuth();
-
-  // const [currentUser,setCurrentUser] = useState({})
-
-  // useEffect(()=>{
-  //   const userHandler=()=>{
-  //     const userFromStorage = await JSON.parse(localStorage.getItem('userDetails'));
-  //   }
-
-  // },[])
 
   useEffect(() => {
     const handleSyncData = async () => {
@@ -67,15 +58,9 @@ const Board = () => {
   useEffect(() => {
     const fetchUserLocation = async () => {
       if (currentLoggedInUser) {
-        const FromStorage = await JSON.parse(localStorage.getItem('userDetails'));
-        console.log('From stoarage', FromStorage.continent);
-        const q = query(collection(db, 'users'), where('uid', '==', currentLoggedInUser?.uid));
-        const docSnap = await getDocs(q);
-        const userData = docSnap.docs[0].data();
-
-        localStorage.setItem('userDetails', JSON.stringify(userData));
-        setCurrentUserContinent(userData.continent);
-        setCurrentUserLocation(userData.country);
+        const fromStorage = await JSON.parse(localStorage.getItem('userDetails'));
+        setCurrentUserContinent(fromStorage.continent);
+        setCurrentUserLocation(fromStorage.country);
       }
     };
     fetchUserLocation();

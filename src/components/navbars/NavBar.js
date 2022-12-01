@@ -3,19 +3,18 @@ import { HiMenu } from 'react-icons/hi';
 import { IoIosArrowDown } from 'react-icons/io';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  query, collection, where, getDocs,
-} from 'firebase/firestore';
-
 import { toast } from 'react-toastify';
-import { auth, db } from '../auth/firebase';
+import { useLoggedInUserAuth } from '../../context/UserDataContextProvider';
+
+import { auth } from '../auth/firebase';
 import Dropdown from '../subNavBars/Dropdown';
 
 const NavBar = () => {
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState('');
-  const defaultPic = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60';
+  const defaultPic = 'https://deejayfarm.com/wp-content/uploads/2019/10/Profile-pic.jpg';
   const [profile, setProfile] = useState(defaultPic);
+  const { currentLoggedInUser } = useLoggedInUserAuth();
 
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropDown, setIsDropDown] = useState(false);
@@ -27,12 +26,12 @@ const NavBar = () => {
 
   const fetchUserName = async () => {
     try {
-      const q = query(collection(db, 'users'), where('uid', '==', user?.uid));
-      const doc = await getDocs(q);
-      const data = doc.docs[0].data();
-      setName(data.name);
-      if (data.profileURL) {
-        setProfile(data.profileURL);
+      if (currentLoggedInUser) {
+        const fromStorage = await JSON.parse(localStorage.getItem('userDetails'));
+        setName(fromStorage.name);
+        if (fromStorage.profileURL) {
+          setProfile(fromStorage.profileURL);
+        }
       }
     } catch (err) {
       toast.error('An error occured while fetching user data', {
