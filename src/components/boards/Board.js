@@ -27,15 +27,6 @@ const Board = () => {
   const [BarChartData, setBarchartData] = useState([]);
   const { currentLoggedInUser } = useLoggedInUserAuth();
 
-  // const [currentUser,setCurrentUser] = useState({})
-
-  // useEffect(()=>{
-  //   const userHandler=()=>{
-  //     const userFromStorage = await JSON.parse(localStorage.getItem('userDetails'));
-  //   }
-
-  // },[])
-
   useEffect(() => {
     const handleSyncData = async () => {
       const colRef = await collection(db, 'targetList');

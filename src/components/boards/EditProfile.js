@@ -14,6 +14,7 @@ const EditProfile = () => {
     id: '',
 
   });
+
   useEffect(() => {
     const fetchUserLocation = async () => {
       const userFromStorage = await JSON.parse(localStorage.getItem('userDetails'));
@@ -45,6 +46,7 @@ const EditProfile = () => {
   };
   return (
     <div className="center_edit">
+      <div className="newNav" />
       <div className="register">
         <div className="register__container">
           <input
@@ -120,6 +122,9 @@ const EditProfile = () => {
           </section>
           <button type="button" onClick={handlesubmit} className="register__btn">
             Edit
+          </button>
+          <button type="button" className="register__btn">
+            Cancel Edit
           </button>
         </div>
       </div>
