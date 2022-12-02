@@ -28,21 +28,6 @@ const Board = () => {
   const { currentLoggedInUser } = useLoggedInUserAuth();
 
   useEffect(() => {
-    const handleSyncData = async () => {
-      const colRef = await collection(db, 'targetList');
-      getDocs(colRef).then((snapshots) => {
-        const details = [];
-        snapshots.docs.forEach((item) => {
-          details.push({ ...item.data(), id: item.id });
-        });
-        console.log(targetList,"target list")
-        setTargetList(details);
-      });
-    };
-    handleSyncData();
-  }, []);
-
-  useEffect(() => {
     const fetchUserLocation = async () => {
       if (currentLoggedInUser) {
         const FromStorage = await JSON.parse(localStorage.getItem('userDetails'));
@@ -64,6 +49,7 @@ const Board = () => {
     const docSnap = await getDoc(dataRef);
     if (docSnap.exists()) {
       const result = docSnap.data();
+      setTargetList(result.targetList)
       setTrackList(result.trackBoard);
       setNewCardList((result.cardList));
       setBarchartData(result.datasets);
@@ -138,7 +124,8 @@ const Board = () => {
         </div>
       </section>
       <section className="track">
-        {trackList.map((item) => (<TrackBoard key={item.id} item={item} />))}
+      {trackList.length === 0 && fakeArr.map(() => (<Skeleton className="card_one"><div className="card_one">kkkkkkkkkjjjjjjjjj</div></Skeleton>))}
+      {trackList.length > 0 && trackList.map((item) => (<TrackBoard key={item.id} item={item} />))}
       </section>
 
       <section className="target">
@@ -149,7 +136,8 @@ const Board = () => {
           </Link>
         </div>
         <div className="target__list">
-          {targetList.map((item) => (<TargetBord key={item.id} item={item} />))}
+        {targetList.length === 0 && fakeArr.map(() => (<Skeleton className="card_one"><div className="card_one">kkkkkkkkkjjjjjjjjj</div></Skeleton>))}
+        {targetList.length > 0 && targetList.map((item) => (<TargetBord key={item.id} item={item} />))}
         </div>
       </section>
     </section>
