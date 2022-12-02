@@ -35,21 +35,8 @@ const Board = () => {
         snapshots.docs.forEach((item) => {
           details.push({ ...item.data(), id: item.id });
         });
+        console.log(targetList,"target list")
         setTargetList(details);
-      });
-    };
-    handleSyncData();
-  }, []);
-
-  useEffect(() => {
-    const handleSyncData = async () => {
-      const colRef = await collection(db, 'trackBoard');
-      getDocs(colRef).then((snapshots) => {
-        const details = [];
-        snapshots.docs.forEach((item) => {
-          details.push({ ...item.data(), id: item.id, status: 'OK' });
-        });
-        setTrackList(details);
       });
     };
     handleSyncData();
@@ -77,6 +64,7 @@ const Board = () => {
     const docSnap = await getDoc(dataRef);
     if (docSnap.exists()) {
       const result = docSnap.data();
+      setTrackList(result.trackBoard);
       setNewCardList((result.cardList));
       setBarchartData(result.datasets);
     } else {
