@@ -4,7 +4,7 @@ import { TbBuildingSkyscraper } from 'react-icons/tb';
 import { ImHome } from 'react-icons/im';
 import { FaBatteryThreeQuarters } from 'react-icons/fa';
 import {
-  collection, doc, getDoc, getDocs, query, where,
+  doc, getDoc,
 } from 'firebase/firestore';
 import { Skeleton } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
@@ -16,7 +16,6 @@ import TrackBoard from '../shared/TrackBoard';
 import TargetBord from '../shared/TargetBord';
 import { db } from '../auth/firebase';
 import { useLoggedInUserAuth } from '../../context/UserDataContextProvider';
-// import { cardList } from '../shared/Data';
 
 const Board = () => {
   const [newCardList, setNewCardList] = useState([]);
@@ -31,12 +30,6 @@ const Board = () => {
     const fetchUserLocation = async () => {
       if (currentLoggedInUser) {
         const FromStorage = await JSON.parse(localStorage.getItem('userDetails'));
-        // console.log('From stoarage', FromStorage.continent);
-        // const q = query(collection(db, 'users'), where('uid', '==', currentLoggedInUser?.uid));
-        // const docSnap = await getDocs(q);
-        // const userData = docSnap.docs[0].data();
-
-        // localStorage.setItem('userDetails', JSON.stringify(userData));
         setCurrentUserContinent(FromStorage.continent);
         setCurrentUserLocation(FromStorage.country);
       }
@@ -111,12 +104,15 @@ const Board = () => {
       <Alert />
       <section className="card__list">
         {/* eslint-disable-next-line react/jsx-key */}
-        {newCardList.length === 0 && fakeArr.map(() => (
-          <Skeleton className="card_one">
+        {newCardList.length === 0 && fakeArr.map((index) => (
+          <Skeleton className="card_one" key={index + 1}>
             <div className="card_one">kkkkkkkkkjjjjjjjjj</div>
           </Skeleton>
         ))}
-        {newCardList.length > 0 && newCardList.map((item) => (<Card key={item.id} item={item} />))}
+        {
+          newCardList.length > 0
+          && newCardList.map((item) => (<Card key={item.id} item={item} />))
+        }
 
       </section>
       <section className="chart__container">
@@ -133,7 +129,9 @@ const Board = () => {
             <div className="card_one">kkkkkkkkkjjjjjjjjj</div>
           </Skeleton>
         ))}
-        {trackList.length > 0 && trackList.map((item) => (<TrackBoard key={item.id} item={item} />))}
+        {trackList.length > 0 && trackList.map((item) => (
+          <TrackBoard key={item.id} item={item} />
+        ))}
       </section>
 
       <section className="target">
@@ -149,7 +147,9 @@ const Board = () => {
               <div className="card_one">kkkkkkkkkjjjjjjjjj</div>
             </Skeleton>
           ))}
-          {targetList.length > 0 && targetList.map((item) => (<TargetBord key={item.id} item={item} />))}
+          {targetList.length > 0 && targetList.map((item) => (
+            <TargetBord key={item.id} item={item} />
+          ))}
         </div>
       </section>
     </section>

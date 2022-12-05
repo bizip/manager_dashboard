@@ -31,7 +31,7 @@ const EditProfile = () => {
       }
     };
     fetchUserLocation();
-  }, []);
+  }, [editProfileData]);
 
   const handlesubmit = async () => {
     const dataref = doc(db, 'users', editProfileData.id);
