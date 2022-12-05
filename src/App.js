@@ -5,7 +5,6 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Reset from './components/auth/Reset';
 import { UserDataContextProvider } from './context/UserDataContextProvider';
-import EditProfile from './components/boards/EditProfile';
 import Popup from './components/popup/Popup';
 
 function App() {

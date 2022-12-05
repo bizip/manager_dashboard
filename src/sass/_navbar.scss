@@ -80,15 +80,14 @@
   background-color: grey;
 }
 
-#force_bg{
-  background-color:transparent;
+#force_bg {
+  background-color: transparent;
   color: var(--color-grey-dark-1);
   font-size: 1.4rem;
   border: none;
-font-weight: bold;
-&:hover {
-  color: #3b82f6;
-}
-}
+  font-weight: bold;
 
-
+  &:hover {
+    color: #3b82f6;
+  }
+}
