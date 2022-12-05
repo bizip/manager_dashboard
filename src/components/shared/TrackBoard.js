@@ -11,7 +11,7 @@ const TrackBoard = (props) => {
       <div>
         <p>{title}</p>
         <div className="numbers">
-          {icon === '1' ? <BsCurrencyDollar className="left__icon" />: 1}
+          {icon === '1' ? <BsCurrencyDollar className="left__icon" /> : 1}
           <span className="value">{value}</span>
           <span className="right__icon">
             {' '}

@@ -16,7 +16,7 @@ function App() {
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/reset" element={<Reset />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
-          <Route exact path="/dashboard/edit" element={<EditProfile />} />
+          <Route exact path="/edit" element={<EditProfile />} />
         </Routes>
       </Router>
     </UserDataContextProvider>
