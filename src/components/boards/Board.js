@@ -31,14 +31,14 @@ const Board = () => {
     const fetchUserLocation = async () => {
       if (currentLoggedInUser) {
         const FromStorage = await JSON.parse(localStorage.getItem('userDetails'));
-        console.log('From stoarage', FromStorage.continent);
-        const q = query(collection(db, 'users'), where('uid', '==', currentLoggedInUser?.uid));
-        const docSnap = await getDocs(q);
-        const userData = docSnap.docs[0].data();
+        // console.log('From stoarage', FromStorage.continent);
+        // const q = query(collection(db, 'users'), where('uid', '==', currentLoggedInUser?.uid));
+        // const docSnap = await getDocs(q);
+        // const userData = docSnap.docs[0].data();
 
-        localStorage.setItem('userDetails', JSON.stringify(userData));
-        setCurrentUserContinent(userData.continent);
-        setCurrentUserLocation(userData.country);
+        // localStorage.setItem('userDetails', JSON.stringify(userData));
+        setCurrentUserContinent(FromStorage.continent);
+        setCurrentUserLocation(FromStorage.country);
       }
     };
     fetchUserLocation();
@@ -72,8 +72,6 @@ const Board = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUserLocation]);
-
-  console.log(trackList, 'PPPPPPPPPPPPPPPPPPPPPPPPPP');
 
   const fakeArr = [1, 2, 3, 4];
   return (
@@ -113,9 +111,11 @@ const Board = () => {
       <Alert />
       <section className="card__list">
         {/* eslint-disable-next-line react/jsx-key */}
-        {newCardList.length === 0 && fakeArr.map(() => 
-          (<Skeleton className="card_one"><div className="card_one">kkkkkkkkkjjjjjjjjj</div>
-          </Skeleton>))}
+        {newCardList.length === 0 && fakeArr.map(() => (
+          <Skeleton className="card_one">
+            <div className="card_one">kkkkkkkkkjjjjjjjjj</div>
+          </Skeleton>
+        ))}
         {newCardList.length > 0 && newCardList.map((item) => (<Card key={item.id} item={item} />))}
 
       </section>
@@ -128,11 +128,12 @@ const Board = () => {
         </div>
       </section>
       <section className="track">
-        {trackList.length === 0 && fakeArr.map((index) =>
-           (<Skeleton className="card_one" key={index + 1}>
-           <div className="card_one">kkkkkkkkkjjjjjjjjj</div></Skeleton>))}
-        {trackList.length > 0 && trackList.map((item) => 
-          (<TrackBoard key={item.id} item={item} />))}
+        {trackList.length === 0 && fakeArr.map((index) => (
+          <Skeleton className="card_one" key={index + 1}>
+            <div className="card_one">kkkkkkkkkjjjjjjjjj</div>
+          </Skeleton>
+        ))}
+        {trackList.length > 0 && trackList.map((item) => (<TrackBoard key={item.id} item={item} />))}
       </section>
 
       <section className="target">
@@ -143,11 +144,12 @@ const Board = () => {
           </Link>
         </div>
         <div className="target__list">
-          {targetList.length === 0 && fakeArr.map(() => 
-            (<Skeleton className="card_one" key={index + 1}>
-            <div className="card_one">kkkkkkkkkjjjjjjjjj</div></Skeleton>))}
-          {targetList.length > 0 && targetList.map((item) => 
-            (<TargetBord key={item.id} item={item} />))}
+          {targetList.length === 0 && fakeArr.map((index) => (
+            <Skeleton className="card_one" key={index + 1}>
+              <div className="card_one">kkkkkkkkkjjjjjjjjj</div>
+            </Skeleton>
+          ))}
+          {targetList.length > 0 && targetList.map((item) => (<TargetBord key={item.id} item={item} />))}
         </div>
       </section>
     </section>
