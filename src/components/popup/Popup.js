@@ -25,7 +25,7 @@ const DialogDemo = () => {
 
   useEffect(() => {
     const fetchUserLocation = async () => {
-      const userFromStorage = await JSON.parse(localStorage.getItem('userDetails'));
+      const userFromStorage = await JSON.parse(localStorage.getItem('currentLoggedInUser'));
       if (userFromStorage) {
         setEditProfileData({
           ...editProfileData,
@@ -42,8 +42,11 @@ const DialogDemo = () => {
   }, []);
 
   const handlesubmit = async () => {
+    console.log(editProfileData,"Editing");
     const dataref = doc(db, 'users', editProfileData.id);
-    await updateDoc(dataref, editProfileData);
+    await updateDoc(dataref, editProfileData).then((res) => {
+      console.log(res);
+    });
   };
 
   const dialogFuncMap = {
@@ -115,6 +118,10 @@ const DialogDemo = () => {
                   name="city"
                   value={editProfileData.city}
                   placeholder="City"
+                  onChange={(e) => setEditProfileData({
+                    ...editProfileData,
+                    [e.target.name]: e.target.value,
+                  })}
                 />
 
                 <input

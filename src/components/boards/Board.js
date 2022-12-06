@@ -30,7 +30,6 @@ const Board = () => {
     const fetchUserLocation = async () => {
       if (currentLoggedInUser) {
         const FromStorage = await JSON.parse(localStorage.getItem('currentLoggedInUser'));
-        console.log("From staorage", FromStorage)
         setCurrentUserContinent(FromStorage.continent);
         setCurrentUserLocation(FromStorage.country);
       }
@@ -61,7 +60,7 @@ const Board = () => {
     }
   };
   useEffect(() => {
-    if (currentUserLocation) {
+    if (currentUserLocation && currentUserContinent !== '') {
       handleSyncData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
