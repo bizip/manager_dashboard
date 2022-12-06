@@ -5,6 +5,7 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Reset from './components/auth/Reset';
 import { UserDataContextProvider } from './context/UserDataContextProvider';
+import Popup from './components/popup/Popup';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/reset" element={<Reset />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route exact path="/edit" element={<Popup />} />
         </Routes>
       </Router>
     </UserDataContextProvider>

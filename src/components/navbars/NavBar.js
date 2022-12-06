@@ -6,8 +6,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   query, collection, where, getDocs,
 } from 'firebase/firestore';
-// import { onAuthStateChanged } from 'firebase/auth';
-// import { collection, doc, setDoc } from "firebase/firestore";
 
 import { toast } from 'react-toastify';
 import { auth, db } from '../auth/firebase';
@@ -51,8 +49,6 @@ const NavBar = () => {
   };
   /* eslint-disable consistent-return */
   useEffect(() => {
-    // if (loading) return;
-    // On the above line we can add loader
     if (!user) return navigate('/');
     fetchUserName();
     user.providerData.forEach((profile) => {
@@ -63,15 +59,8 @@ const NavBar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading]);
 
-  // if (docSnap.exists()) {
-  //   console.log("Document data:", docSnap.data());
-  // } else {
-  //   // doc.data() will be undefined in this case
-  //   console.log("No such document!");
-  // }
-
   return (
-    <div>
+    <>
       <nav className="nav_container">
         <div className="nav__left">
           <h2>architect</h2>
@@ -98,7 +87,7 @@ const NavBar = () => {
         </div>
       </nav>
       <Dropdown isDropDown={isDropDown} />
-    </div>
+    </>
   );
 };
 

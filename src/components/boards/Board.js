@@ -4,7 +4,7 @@ import { TbBuildingSkyscraper } from 'react-icons/tb';
 import { ImHome } from 'react-icons/im';
 import { FaBatteryThreeQuarters } from 'react-icons/fa';
 import {
-  collection, doc, getDoc, getDocs, query, where,
+  doc, getDoc,
 } from 'firebase/firestore';
 import { Skeleton } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
@@ -16,7 +16,6 @@ import TrackBoard from '../shared/TrackBoard';
 import TargetBord from '../shared/TargetBord';
 import { db } from '../auth/firebase';
 import { useLoggedInUserAuth } from '../../context/UserDataContextProvider';
-// import { cardList } from '../shared/Data';
 
 const Board = () => {
   const [newCardList, setNewCardList] = useState([]);
@@ -28,41 +27,11 @@ const Board = () => {
   const { currentLoggedInUser } = useLoggedInUserAuth();
 
   useEffect(() => {
-    const handleSyncData = async () => {
-      const colRef = await collection(db, 'targetList');
-      getDocs(colRef).then((snapshots) => {
-        const details = [];
-        snapshots.docs.forEach((item) => {
-          details.push({ ...item.data(), id: item.id });
-        });
-        setTargetList(details);
-      });
-    };
-    handleSyncData();
-  }, []);
-
-  useEffect(() => {
-    const handleSyncData = async () => {
-      const colRef = await collection(db, 'trackBoard');
-      getDocs(colRef).then((snapshots) => {
-        const details = [];
-        snapshots.docs.forEach((item) => {
-          details.push({ ...item.data(), id: item.id, status: 'OK' });
-        });
-        setTrackList(details);
-      });
-    };
-    handleSyncData();
-  }, []);
-
-  useEffect(() => {
     const fetchUserLocation = async () => {
       if (currentLoggedInUser) {
-        const q = query(collection(db, 'users'), where('uid', '==', currentLoggedInUser?.uid));
-        const docSnap = await getDocs(q);
-        const userData = docSnap.docs[0].data();
-        setCurrentUserContinent(userData.continent);
-        setCurrentUserLocation(userData.country);
+        const FromStorage = await JSON.parse(localStorage.getItem('currentLoggedInUser'));
+        setCurrentUserContinent(FromStorage.continent);
+        setCurrentUserLocation(FromStorage.country);
       }
     };
     fetchUserLocation();
@@ -73,6 +42,8 @@ const Board = () => {
     const docSnap = await getDoc(dataRef);
     if (docSnap.exists()) {
       const result = docSnap.data();
+      setTargetList(result.targetList);
+      setTrackList(result.trackBoard);
       setNewCardList((result.cardList));
       setBarchartData(result.datasets);
     } else {
@@ -89,7 +60,7 @@ const Board = () => {
     }
   };
   useEffect(() => {
-    if (currentUserLocation) {
+    if (currentUserLocation && currentUserContinent !== '') {
       handleSyncData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,7 +90,6 @@ const Board = () => {
             </p>
           </span>
         </div>
-
         <div className="board__icons">
           <select id="country" name="country">
             <option value="australia">Select period ...</option>
@@ -134,8 +104,15 @@ const Board = () => {
       <Alert />
       <section className="card__list">
         {/* eslint-disable-next-line react/jsx-key */}
-        {newCardList.length === 0 && fakeArr.map(() => (<Skeleton className="card_one"><div className="card_one">kkkkkkkkkjjjjjjjjj</div></Skeleton>))}
-        {newCardList.length > 0 && newCardList.map((item) => (<Card key={item.id} item={item} />))}
+        {newCardList.length === 0 && fakeArr.map((index) => (
+          <Skeleton className="card_one" key={index + 1}>
+            <div className="card_one">kkkkkkkkkjjjjjjjjj</div>
+          </Skeleton>
+        ))}
+        {
+          newCardList.length > 0
+          && newCardList.map((item) => (<Card key={item.id} item={item} />))
+        }
 
       </section>
       <section className="chart__container">
@@ -147,7 +124,14 @@ const Board = () => {
         </div>
       </section>
       <section className="track">
-        {trackList.map((item) => (<TrackBoard key={item.id} item={item} />))}
+        {trackList.length === 0 && fakeArr.map((index) => (
+          <Skeleton className="card_one" key={index + 1}>
+            <div className="card_one">kkkkkkkkkjjjjjjjjj</div>
+          </Skeleton>
+        ))}
+        {trackList.length > 0 && trackList.map((item) => (
+          <TrackBoard key={item.id} item={item} />
+        ))}
       </section>
 
       <section className="target">
@@ -158,7 +142,14 @@ const Board = () => {
           </Link>
         </div>
         <div className="target__list">
-          {targetList.map((item) => (<TargetBord key={item.id} item={item} />))}
+          {targetList.length === 0 && fakeArr.map((index) => (
+            <Skeleton className="card_one" key={index + 1}>
+              <div className="card_one">kkkkkkkkkjjjjjjjjj</div>
+            </Skeleton>
+          ))}
+          {targetList.length > 0 && targetList.map((item) => (
+            <TargetBord key={item.id} item={item} />
+          ))}
         </div>
       </section>
     </section>
