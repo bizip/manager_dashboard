@@ -13,6 +13,7 @@ import { db } from '../auth/firebase';
 
 const DialogDemo = () => {
   const [displayResponsive, setDisplayResponsive] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [editProfileData, setEditProfileData] = useState({
     name: '',
     continent: '',
@@ -39,13 +40,15 @@ const DialogDemo = () => {
       }
     };
     fetchUserLocation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handlesubmit = async () => {
-    console.log(editProfileData,"Editing");
+    setLoading(true);
     const dataref = doc(db, 'users', editProfileData.id);
-    await updateDoc(dataref, editProfileData).then((res) => {
-      console.log(res);
+    await updateDoc(dataref, editProfileData).then(() => {
+      setLoading(false);
+      setDisplayResponsive(false);
     });
   };
 
@@ -92,6 +95,10 @@ const DialogDemo = () => {
                   id="continent"
                   name="continent"
                   className="register__textBox"
+                  onChange={(e) => setEditProfileData({
+                    ...editProfileData,
+                    [e.target.name]: e.target.value,
+                  })}
                 >
                   <option value="asia">Asia</option>
                   <option value="africa">Africa</option>
@@ -104,6 +111,10 @@ const DialogDemo = () => {
                   id="country"
                   name="country"
                   className="register__textBox"
+                  onChange={(e) => setEditProfileData({
+                    ...editProfileData,
+                    [e.target.name]: e.target.value,
+                  })}
                 >
                   <option value="uganda">Uganda</option>
                   <option value="rwanda">Rwanda</option>
@@ -134,9 +145,8 @@ const DialogDemo = () => {
                   })}
                   placeholder="Postal code"
                 />
-
                 <button type="button" className="register__btn" onClick={handlesubmit}>
-                  Edit
+                  {loading ? 'Editing ...' : 'Edit'}
                 </button>
               </div>
             </div>

@@ -55,13 +55,13 @@ function Login() {
         <button type="button" className="login__btn login__google" onClick={signInWithGoogle}>
           Login with Google
         </button>
-        <div>
+        <div className="text">
           <Link to="/reset">Forgot Password</Link>
         </div>
-        <div>
+        <div className="text">
           Don&apos;t have an account?
           {' '}
-          <Link to="/register">Register</Link>
+          <Link to="/register" className="text">Register</Link>
           {' '}
           now.
         </div>
