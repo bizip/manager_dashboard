@@ -7,6 +7,8 @@ import 'primereact/resources/primereact.css';
 import React, { useEffect, useState } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../auth/firebase';
 // import './DialogDemo.css';
 
 const DialogDemo = () => {
@@ -40,16 +42,8 @@ const DialogDemo = () => {
   }, []);
 
   const handlesubmit = async () => {
-    console.log(editProfileData);
-    // const dataref = doc(db, 'users', editProfileData.id);
-    // setDoc(dataref, editProfileData)
-    //   .then(() => {
-    //     // console.log(res);
-    //     // console.log('Entire Document has been updated successfully');
-    //   })
-    //   .catch(() => {
-    //     // console.log(error);
-    //   });
+    const dataref = doc(db, 'users', editProfileData.id);
+    await updateDoc(dataref, editProfileData);
   };
 
   const dialogFuncMap = {
@@ -126,7 +120,7 @@ const DialogDemo = () => {
                 <input
                   type="text"
                   className="register__textBox"
-                  value={editProfileData.postCode}
+                  value={editProfileData.postalCode}
                   onChange={(e) => setEditProfileData({
                     ...editProfileData,
                     [e.target.name]: e.target.value,

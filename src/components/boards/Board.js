@@ -29,7 +29,8 @@ const Board = () => {
   useEffect(() => {
     const fetchUserLocation = async () => {
       if (currentLoggedInUser) {
-        const FromStorage = await JSON.parse(localStorage.getItem('userDetails'));
+        const FromStorage = await JSON.parse(localStorage.getItem('currentLoggedInUser'));
+        console.log("From staorage", FromStorage)
         setCurrentUserContinent(FromStorage.continent);
         setCurrentUserLocation(FromStorage.country);
       }
